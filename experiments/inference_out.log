@@ -1,0 +1,15 @@
+2025-10-31 01:05:53,039 - root - WARNING - Environmental variable BEAKER_EXPERIMENT_ID not found.
+2025-10-31 01:05:53,039 - root - WARNING - Environmental variable SLURM_JOB_ID not found.
+2025-10-31 01:05:53,039 - root - WARNING - Environmental variable SLURM_JOB_USER not found.
+2025-10-31 01:05:53,040 - root - WARNING - Environmental variable FME_TRAIN_DIR not found.
+2025-10-31 01:05:53,040 - root - WARNING - Environmental variable FME_VALID_DIR not found.
+2025-10-31 01:05:53,040 - root - WARNING - Environmental variable FME_STATS_DIR not found.
+2025-10-31 01:05:53,040 - root - WARNING - Environmental variable FME_CHECKPOINT_DIR not found.
+2025-10-31 01:05:53,041 - root - WARNING - Environmental variable FME_OUTPUT_DIR not found.
+2025-10-31 01:05:53,041 - root - WARNING - Environmental variable FME_IMAGE not found.
+2025-10-31 01:05:53,042 - root - WARNING - Beaker Experiment ID not found.
+2025-10-31 01:05:53,050 - root - INFO - --------------- Versions ---------------
+2025-10-31 01:05:53,051 - root - INFO - Torch: 2.9.0+cu128
+2025-10-31 01:05:53,051 - root - INFO - ----------------------------------------
+2025-10-31 01:05:53,052 - root - INFO - Current device is cpu
+2025-10-31 01:05:53,052 - root - INFO - Loading trained model checkpoint from /app/checkpoints/ACE2-ERA5.ckpt

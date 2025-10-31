@@ -1,20 +1,44 @@
-import os, io, json
+import os, io, json, shutil
 from typing import Optional, List, Literal, Dict, Any
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Form
 from pydantic import BaseModel
 import httpx
 import numpy as np
+from datetime import datetime
+from fme import ace
+from fme.ace.config import load_config
+from huggingface_hub import hf_hub_download
+
+os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
+
+# Download checkpoints
+os.makedirs("/app/checkpoints", exist_ok=True)
+ckpt_path = "/app/checkpoints/ACE2-ERA5.ckpt"
+
+if not os.path.exists(ckpt_path):
+    print("⬇️ Downloading ACE2-ERA5 from Hugging Face…")
+    hf_path = hf_hub_download(repo_id="allenai/ACE2-ERA5", filename="ACE2-ERA5.ckpt")
+    shutil.copy(hf_path, ckpt_path)
+    print("✅ Saved at", ckpt_path)
+else:
+    print("✅ ACE2-ERA5 checkpoint already available:", ckpt_path)
+
+# config
+emu_cfg = load_config("/app/configs/config-inference.yaml", config_type="inference")
+emu = ace.Stepper.from_config(emu_cfg)
+
 
 OPENAI_KEY = os.getenv("OPENAI_API_KEY")
 ANTHROPIC_KEY = os.getenv("ANTHROPIC_API_KEY")
-EARTH2_NIM_URL = os.getenv("EARTH2_NIM_URL", "http://localhost:8000")
+
 
 if not OPENAI_KEY:
     raise RuntimeError("OPENAI_API_KEY environment variable not set")
 if not ANTHROPIC_KEY:
     raise RuntimeError("ANTHROPIC_API_KEY environment variable not set")
 
-app = FastAPI(title="Env Research Agent")
+app = FastAPI(title="RWAgent (ACE Edition)", version="1.0.0")
+
 
 class Question(BaseModel):
     query: str
@@ -120,3 +144,21 @@ async def health():
         results["claude"] = f"❌ {e}"
 
     return results
+
+@app.post("/forecast")
+async def forecast(datetime_utc: str = Form(...), simulation_length: int = Form(4)):
+    """
+    Run climate forecast using AI2 Climate Emulator (ACE).
+    """
+    try:
+        forecast = emu.forecast(
+            init_time=datetime.fromisoformat(datetime_utc.replace("Z", "")),
+            steps=simulation_length,
+        )
+
+        output_path = "/app/app/ace_forecast.npy"
+        np.save(output_path, forecast)
+        return {"status": "ok", "output_file": output_path, "shape": forecast.shape}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

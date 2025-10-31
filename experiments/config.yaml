@@ -1,0 +1,10 @@
+experiment_dir: /app/experiments
+checkpoint_path: /app/checkpoints/ACE2-ERA5.ckpt
+n_forward_steps: 4
+initial_condition:
+  path: /app/data/initial_conditions.nc
+forcing_loader:
+  dataset:
+    data_path: /app/data/forcing_data
+logging:
+  log_to_wandb: false
