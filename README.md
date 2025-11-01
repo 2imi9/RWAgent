@@ -1,22 +1,22 @@
 
-# 🌎 RWAgent (ACE Edition)
+# RWAgent (ACE Edition)
 
 An intelligent research assistant combining **LLMs (OpenAI, Anthropic)** with the **AI2 Climate Emulator (ACE)** for high-resolution weather and climate forecasting.
 Supports hybrid reasoning (language + simulation) and GPU acceleration on systems like the RTX 5090.
 
 ---
 
-## 🧩 Overview
+## Overview
 
 RWAgent enables environmental forecasting and scientific querying by combining:
 
-* 🧠 **LLMs (GPT-4o, Claude 3.5)** for reasoning, context understanding, and data interpretation.
-* ☁️ **AI2 Climate Emulator (ACE / `fme`)** for fast neural weather forecasts.
-* 🧰 **FastAPI backend** with Docker deployment.
+*  **LLMs (GPT-4o, Claude 3.5)** for reasoning, context understanding, and data interpretation.
+*  **AI2 Climate Emulator (ACE / `fme`)** for fast neural weather forecasts.
+*  **FastAPI backend** with Docker deployment.
 
 ---
 
-## ⚙️ Requirements
+##  Requirements
 
 * **Docker + Docker Compose** (latest version)
 * **NVIDIA GPU (recommended)** – e.g. RTX 5090 with CUDA drivers installed
@@ -29,7 +29,7 @@ RWAgent enables environmental forecasting and scientific querying by combining:
 
 ---
 
-## 🏗️ Build and Run
+##  Build and Run
 
 Clone the repo and build the containers:
 
@@ -46,7 +46,7 @@ Uvicorn running on http://0.0.0.0:8080
 
 ---
 
-## 🔍 Verify Installation
+## Verify Installation
 
 Check ACE is available:
 
@@ -58,7 +58,7 @@ If this prints a version (e.g. `0.4.1`), ACE is ready.
 
 ---
 
-## 🧠 LLM Health Check
+## LLM Health Check
 
 Test both connected APIs:
 
@@ -77,7 +77,7 @@ You should get:
 
 ---
 
-## 🌦️ Forecast Example (ACE)
+## Forecast Example (ACE)
 
 Generate a short forecast using AI2’s `pangu_weather` model:
 
@@ -102,7 +102,7 @@ This saves an `ace_forecast.npy` file with predicted atmospheric data.
 
 ---
 
-## 💬 Ask LLM
+## Ask LLM
 
 You can also ask reasoning or research questions:
 
@@ -117,7 +117,7 @@ curl -X POST "http://localhost:8080/ask" \
 
 ---
 
-## 🧱 Project Structure
+##  Project Structure
 
 ```
 RWAgent/
@@ -132,7 +132,7 @@ RWAgent/
 
 ---
 
-## 🧠 Powered By
+##  Powered By
 
 * [FastAPI](https://fastapi.tiangolo.com/)
 * [AI2 Climate Emulator (ACE)](https://ai2-climate-emulator.readthedocs.io/)
